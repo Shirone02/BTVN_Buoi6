@@ -118,4 +118,62 @@ public class DBHelper extends SQLiteOpenHelper {
 
         return  listProductsResult;
     }
+
+    @SuppressLint("Range")
+    public List<Product> searchByBrand(String brand){
+        List<Product> listProductsResult = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + PRODUCT_BRAND + " LIKE '%" + brand + "%'";
+        Cursor cursor = db.rawQuery(sql,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Product product = new Product();
+                product.setTitle(cursor.getString(cursor.getColumnIndex(PRODUCT_TITLE)));
+                product.setBrand(cursor.getString(cursor.getColumnIndex(PRODUCT_BRAND)));
+                product.setCategory(cursor.getString(cursor.getColumnIndex(PRODUCT_CATEGORY)));
+                product.setPrice(cursor.getString(cursor.getColumnIndex(PRODUCT_PRICE)));
+
+                Gson gson = new Gson();
+                Type typeToken = new TypeToken<List<String>>(){}.getType();
+                List<String> data = gson.fromJson(cursor.getString(cursor.getColumnIndex(PRODUCT_IMAGES)), typeToken);
+
+                product.setImage(data);
+                listProductsResult.add(product);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return  listProductsResult;
+    }
+
+    @SuppressLint("Range")
+    public List<Product> searchByCategory(String category){
+        List<Product> listProductsResult = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE " + PRODUCT_CATEGORY + " LIKE '%" + category + "%'";
+        Cursor cursor = db.rawQuery(sql,null);
+
+        if(cursor.moveToFirst()){
+            do{
+                Product product = new Product();
+                product.setTitle(cursor.getString(cursor.getColumnIndex(PRODUCT_TITLE)));
+                product.setBrand(cursor.getString(cursor.getColumnIndex(PRODUCT_BRAND)));
+                product.setCategory(cursor.getString(cursor.getColumnIndex(PRODUCT_CATEGORY)));
+                product.setPrice(cursor.getString(cursor.getColumnIndex(PRODUCT_PRICE)));
+
+                Gson gson = new Gson();
+                Type typeToken = new TypeToken<List<String>>(){}.getType();
+                List<String> data = gson.fromJson(cursor.getString(cursor.getColumnIndex(PRODUCT_IMAGES)), typeToken);
+
+                product.setImage(data);
+                listProductsResult.add(product);
+            } while(cursor.moveToNext());
+        }
+        cursor.close();
+        db.close();
+
+        return  listProductsResult;
+    }
 }
