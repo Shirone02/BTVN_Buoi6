@@ -58,6 +58,16 @@ public class MainActivity extends AppCompatActivity {
         mListProducts = new ArrayList<>();
         mProductAdapter = new ProductAdapter(mListProducts);
         mDBHelper = new DBHelper(this);
+        for(int i=0;i<10;i++){
+            Product product = new Product();
+            product.setTitle("Realme C" + i);
+            product.setBrand("Realme");
+            product.setCategory("Điện thoại");
+            product.setPrice("12.990.00" + i );
+            List<String> images = new ArrayList<>();
+            images.add("https://cdn.tgdd.vn/Products/Images/42/301603/realme-c35-vang-thumb-600x600.jpg");
+            product.setImage(images);
+        }
         for(int i=0;i<5;i++){
             Product product = new Product();
             product.setTitle("Samsung C" + i);
